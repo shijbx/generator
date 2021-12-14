@@ -1,0 +1,68 @@
+package ${package.Controller};
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
+import ${package.Entity}.bo.${entity}BO;
+import ${package.Service}.${table.serviceName};
+import us.aiya.busline.utils.DelBatch;
+import us.aiya.busline.utils.Rv;
+import us.aiya.busline.utils.SelectPageMent;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Api(tags = "$!{table.comment}", description = "$!{table.comment}相关接口")
+@RestController
+@RequestMapping("${entity}")
+public class ${table.controllerName} {
+
+    @Resource
+    private ${table.serviceName} service;
+
+    @ApiOperation(value = "分页查询", notes = "分页查询")
+    @PostMapping("/queryPageByList")
+    public Rv queryPageByList(@RequestBody SelectPageMent spm) {
+        return new Rv(service.queryPageByList(spm));
+    }
+
+    @ApiOperation(value = "查询列表", notes = "查询列表")
+    @GetMapping("/queryList")
+    public Rv queryList(@RequestBody ${entity}BO entity) {
+        return new Rv(service.queryList(entity));
+    }
+
+    @ApiOperation(value = "新增", notes = "新增")
+    @PostMapping("/save")
+    public Rv save(@RequestBody ${entity}BO entity) {
+        return new Rv(service.save(entity));
+    }
+
+    @ApiOperation(value = "修改", notes = "修改")
+    @PostMapping("/update")
+    public Rv update(@RequestBody ${entity}BO entity) {
+        return new Rv(service.update(entity));
+    }
+
+    @ApiOperation(value = "删除", notes = "删除")
+    @PostMapping("/delete")
+    public Rv delete(@RequestBody DelBatch delBatch) {
+        return new Rv(service.delete(delBatch.getId()));
+    }
+
+    @ApiOperation(value = "批量删除", notes = "批量删除")
+    @PostMapping("/deleteByIds")
+    public Rv deleteByIds(@RequestBody DelBatch delBatch) {
+        List<Long> ids = delBatch.getSelectedRowKeys().stream().map(id->(long)id).collect(Collectors.toList());
+        return new Rv(service.deleteByIds(ids));
+    }
+}

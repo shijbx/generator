@@ -1,0 +1,34 @@
+package ${package.Entity}.vo;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
+import lombok.Data;
+import us.aiya.busline.utils.BaseEntity;
+
+
+/**
+ * $!{table.comment}VO
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Data
+@ApiModel(value = "${entity}VO", description = "$!{table.comment}")
+public class ${entity}VO extends BaseEntity {
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})
+#set($keyPropertyName=${field.propertyName})
+#end
+#if("$!field.comment" != "")
+    /**
+     * ${field.comment}
+     */
+#end
+    @ApiModelProperty(value = "${field.comment}")
+    private ${field.propertyType} ${field.propertyName};
+#end
+
+
+}

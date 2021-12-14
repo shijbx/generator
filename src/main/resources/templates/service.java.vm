@@ -1,0 +1,70 @@
+package ${package.Service};
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import ${package.Entity}.${entity};
+import ${package.Entity}.bo.${entity}BO;
+import ${package.Entity}.vo.${entity}VO;
+import us.aiya.busline.utils.SelectPageMent;
+
+import java.util.List;
+
+
+/**
+ * $!{table.comment} 服务类
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+
+public interface ${table.serviceName} extends IService<${entity}>{
+    /**
+     * 分页查询
+     *
+     * @Param: spm
+     * @return: IPage<${entity}VO>
+     */
+    IPage<${entity}VO> queryPageByList(SelectPageMent spm);
+
+    /**
+     * 查询列表
+     *
+     * @Param: bo
+     * @return: List<${entity}VO>
+     */
+    List<${entity}VO> queryList(${entity}BO bo);
+
+    /**
+     * 新增
+     *
+     * @Param: bo
+     * @return: int
+     */
+    int save(${entity}BO bo);
+
+    /**
+     * 修改
+     *
+     * @Param: bo
+     * @return: int
+     */
+    int update(${entity}BO bo);
+
+    /**
+     * 删除
+     *
+     * @Param: id
+     * @return: int
+     */
+    int delete(Long id);
+
+    /**
+     * 批量删除
+     *
+     * @Param: ids
+     * @return: Boolean
+     */
+    int deleteByIds(List<Long> ids);
+
+}
+

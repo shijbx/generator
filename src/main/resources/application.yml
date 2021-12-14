@@ -1,0 +1,22 @@
+# 数据源配置
+datasource:
+  url: jdbc:mysql://192.168.110.221:3306/aiya-busline?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&serverTimezone=America/New_York
+  username: root
+  password: AfmKlZHe11
+
+
+system:
+  # entity vo父类路径
+  superEntityClass: us.aiya.busline.utils.BaseEntity
+  # 公用字段 不会生成实体属性
+  uperEntityColumns: create_time,update_time
+
+gencode:
+  # 作者
+  author: sain
+  # 项目本地路径
+  outputUrl: /Users/xbb/soft/aiya/aiya_busline_java
+  # 包名
+  packageName: us.aiya.busline
+  # 表名
+  inTables: bus_base_config

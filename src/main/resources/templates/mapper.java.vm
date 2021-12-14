@@ -1,0 +1,20 @@
+package ${package.Mapper};
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import ${package.Entity}.${entity};
+
+/**
+ * $!{table.comment} Mapper 接口
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.mapperName} : ${superMapperClass}<${entity}>
+#else
+@Mapper
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+
+}
+#end

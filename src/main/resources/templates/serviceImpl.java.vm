@@ -1,0 +1,85 @@
+package ${package.ServiceImpl};
+
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import ${package.Entity}.${entity};
+import ${package.Entity}.bo.${entity}BO;
+import ${package.Entity}.vo.${entity}VO;
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import us.aiya.busline.utils.DefaultSearchCondition;
+import us.aiya.busline.utils.ObjectUtil;
+import us.aiya.busline.utils.SelectPageMent;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+
+   @Override
+   public IPage<${entity}VO> queryPageByList(SelectPageMent spm){
+
+     Page<${entity}> page = new Page<>(spm.getStartPage(), spm.getPageSize());
+
+     DefaultSearchCondition<${entity}> scw = new DefaultSearchCondition<>();
+
+     Page<${entity}> selectPage = baseMapper.selectPage(page,scw.computeSearchCondition("create_time", spm));
+
+     return ObjectUtil.copyPage(selectPage, ${entity}VO.class);
+
+   }
+
+   @Override
+   public List<${entity}VO> queryList(${entity}BO bo) {
+     LambdaQueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>().lambda();
+     List<${entity}> list = baseMapper.selectList(queryWrapper);
+     return list.stream().map(p -> ObjectUtil.copy(p, ${entity}VO.class)).collect(Collectors.toList());
+   }
+
+   @Override
+   public int save(${entity}BO bo){
+     return baseMapper.insert(ObjectUtil.copy(bo, ${entity}.class));
+   }
+
+   @Override
+   public int update(${entity}BO bo){
+      return baseMapper.updateById(ObjectUtil.copy(bo, ${entity}.class));
+   }
+
+   @Override
+   public int delete(Long id){
+       return baseMapper.deleteById(id);
+   }
+
+   @Override
+   public int deleteByIds(List<Long> ids) {
+     if(!CollectionUtils.isEmpty(ids)){
+
+       if(this.removeByIds(ids)){
+         return 1;
+       }
+
+     }
+     return 0;
+   }
+
+
+}
+
