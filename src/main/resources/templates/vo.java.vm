@@ -27,7 +27,9 @@ public class ${entity}VO extends BaseEntity {
      */
 #end
     @ApiModelProperty(value = "${field.comment}")
+    #if("$!field.propertyName" != "")
     private ${field.propertyType} ${field.propertyName};
+    #end
 #end
 
 

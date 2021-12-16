@@ -65,7 +65,11 @@ public class ${entity} extends BaseEntity {
 #if(${logicDeleteFieldName}==${field.name})
     @TableLogic
 #end
-    private ${field.propertyType} ${field.propertyName};
+    #if(${field.propertyType} == "Integer")
+    var ${field.propertyName}: Int? = null
+    #else
+    var ${field.propertyName}: ${field.propertyType}? = null
+#end
 #end
 
 
