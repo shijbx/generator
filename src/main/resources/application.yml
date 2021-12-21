@@ -11,12 +11,13 @@ system:
   # 公用字段 不会生成实体属性
   uperEntityColumns: create_time,update_time
 
+
 gencode:
   # 作者
   author: sain
   # 项目本地路径
-  outputUrl: /Users/xbb/soft/aiya/aiya_busline_java/src/main/java
+  outputUrl: /Users/xbb/soft/aiya/aiya_busline_java
   # 包名
   packageName: us.aiya.busline
   # 表名
-  inTables: bus_operate_station
+  inTables: bus_operate_busline_bus_schedule

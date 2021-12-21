@@ -20,7 +20,16 @@ import us.aiya.busline.utils.BaseEntity;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("${table.name}")
-public class ${entity} extends BaseEntity {
+#if(${superEntityClass})
+public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
+#elseif(${activeRecord})
+public class ${entity} extends Model<${entity}> {
+#else
+public class ${entity} implements Serializable {
+#end
+#if(${entitySerialVersionUID})
+private static final long serialVersionUID = 1L;
+#end
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
@@ -65,11 +74,7 @@ public class ${entity} extends BaseEntity {
 #if(${logicDeleteFieldName}==${field.name})
     @TableLogic
 #end
-    #if(${field.propertyType} == "Integer")
-    var ${field.propertyName}: Int? = null
-    #else
-    var ${field.propertyName}: ${field.propertyType}? = null
-#end
+    private ${field.propertyType} ${field.propertyName};
 #end
 
 
