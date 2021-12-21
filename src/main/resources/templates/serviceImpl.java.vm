@@ -55,6 +55,12 @@ public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, $
    }
 
    @Override
+   public ${entity}VO getInfoById(Integer id) {
+   ${entity}VO vo = ObjectUtil.copy(baseMapper.selectById(id), ${entity}VO.class);
+     return vo;
+   }
+
+   @Override
    public int save(${entity}BO bo){
      return baseMapper.insert(ObjectUtil.copy(bo, ${entity}.class));
    }

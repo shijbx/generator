@@ -18,15 +18,13 @@ import us.aiya.busline.utils.BaseEntity;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "${entity}VO", description = "$!{table.comment}")
 #if(${superEntityClass})
-public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
+public class ${entity}VO extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
 #elseif(${activeRecord})
-public class ${entity} extends Model<${entity}> {
+public class ${entity}VO extends Model<${entity}> {
 #else
-public class ${entity} implements Serializable {
+public class ${entity}VO implements Serializable {
 #end
-#if(${entitySerialVersionUID})
-private static final long serialVersionUID = 1L;
-#end
+
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})

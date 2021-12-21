@@ -20,4 +20,4 @@ gencode:
   # 包名
   packageName: us.aiya.busline
   # 表名
-  inTables: bus_operate_busline_bus_schedule
+  inTables: bus_operate_busline_schedule

@@ -35,6 +35,14 @@ public interface ${table.serviceName} extends IService<${entity}>{
     List<${entity}VO> queryList(${entity}BO bo);
 
     /**
+     * 查询详情
+     *
+     * @Param: id
+     * @return: ${entity}VO
+     */
+    ${entity}VO getInfoById(Integer id);
+
+    /**
      * 新增
      *
      * @Param: bo

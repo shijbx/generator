@@ -43,6 +43,13 @@ public class ${table.controllerName} {
         return new Rv(service.queryList(bo));
     }
 
+
+    @ApiOperation(value = "查询详情", notes = "查询详情")
+    @GetMapping("/getInfo/{id}")
+    public Rv<${entity}VO> getInfo(@PathVariable Integer id) {
+        return new Rv(service.getInfoById(id));
+    }
+
     @ApiOperation(value = "新增", notes = "新增")
     @PostMapping("/save")
     public Rv<Integer> save(@RequestBody ${entity}BO bo) {
