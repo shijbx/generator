@@ -48,7 +48,7 @@ public interface ${table.serviceName} extends IService<${entity}>{
      * @Param: bo
      * @return: int
      */
-    int save(${entity}BO bo);
+    void save(${entity}BO bo);
 
     /**
      * 修改
@@ -56,7 +56,7 @@ public interface ${table.serviceName} extends IService<${entity}>{
      * @Param: bo
      * @return: int
      */
-    int update(${entity}BO bo);
+    void update(${entity}BO bo);
 
     /**
      * 删除
@@ -64,7 +64,7 @@ public interface ${table.serviceName} extends IService<${entity}>{
      * @Param: id
      * @return: int
      */
-    int delete(Long id);
+    void delete(Long id);
 
     /**
      * 批量删除
@@ -72,7 +72,7 @@ public interface ${table.serviceName} extends IService<${entity}>{
      * @Param: ids
      * @return: Boolean
      */
-    int deleteByIds(List<Long> ids);
+    void deleteByIds(List<Long> ids);
 
 }
 

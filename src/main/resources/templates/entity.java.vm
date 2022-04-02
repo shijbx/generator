@@ -21,11 +21,12 @@ import us.aiya.busline.utils.BaseEntity;
 @EqualsAndHashCode(callSuper = false)
 @TableName("${table.name}")
 #if(${superEntityClass})
-public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
-#elseif(${activeRecord})
-public class ${entity} extends Model<${entity}> {
+public class ${entity} extends ${superEntityClass} {
 #else
 public class ${entity} implements Serializable {
+
+private static final long serialVersionUID = -1L;
+
 #end
 
 
@@ -54,15 +55,13 @@ public class ${entity} implements Serializable {
     @TableId("${field.name}")
 #end
 ## 普通字段
-#elseif(${field.fill})
+#elseif(!${field.keyIdentityFlag})
 ## -----   存在字段填充设置   -----
 #if(${field.convert})
     @TableField(value = "${field.name}", fill = FieldFill.${field.fill})
 #else
-    @TableField(fill = FieldFill.${field.fill})
-#end
-#elseif(${field.convert})
     @TableField("${field.name}")
+#end
 #end
 ## 乐观锁注解
 #if(${versionFieldName}==${field.name})

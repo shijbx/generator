@@ -17,101 +17,125 @@ public class CodeGeneration {
     public static final String packageName = FileUtils.readYml("gencode.packageName");
 
     public static void run() {
-        AutoGenerator mpg = new AutoGenerator();
-        GlobalConfig gc = new GlobalConfig();
+        AutoGenerator generator = new AutoGenerator();
 
         // 全局配置
-        getAllSetting(gc);
+        GlobalConfig globalConfig = getGlobalConfig();
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
-        getFileName(mpg, gc);
+        getFileName(generator, globalConfig);
         // 数据源配置
-        getDataSource(mpg);
+        getDataSource(generator);
         // 策略配置
-        getPolicConfig(mpg);
+        getStrategyConfig(generator);
         // 自定义配置
-        getCustomConfig(mpg);
-        // 指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-        getPath(mpg);
-
+        getInjectionConfig(generator);
+        // 模板配置 不要带上.ftl/.vm
+        getTemplateConfig(generator);
+        // 包名配置
+        getPackageConfig(generator);
         // 执行生成
-        mpg.execute();
+        generator.execute();
+
     }
 
     /**
      * 全局配置
-     *
-     * @param gc
      */
-    private static void getAllSetting(GlobalConfig gc) {
-        // 全局配置
-        gc.setOutputDir(path); // 输出文件路径
+    private static GlobalConfig getGlobalConfig() {
+        GlobalConfig globalConfig = new GlobalConfig();
+        // 输出文件路径
+        globalConfig.setOutputDir(path);
         // 是否覆盖已有文件
-        gc.setFileOverride(false);
-        gc.setOpen(false);
-        gc.setFileOverride(true);
-        // 不需要ActiveRecord特性的请改为false
-        gc.setActiveRecord(false);
+        globalConfig.setFileOverride(false);
+        // 是否打开输出目录
+        globalConfig.setOpen(false);
         // XML 二级缓存
-        gc.setEnableCache(false);
-        // XML ResultMap
-        gc.setBaseResultMap(true);
-        // XML columList
-        gc.setBaseColumnList(true);
+        globalConfig.setEnableCache(false);
         // 作者
-        gc.setAuthor(FileUtils.readYml("gencode.author"));
+        globalConfig.setAuthor(FileUtils.readYml("gencode.author"));
+        // 开启 swagger2 模式
+        globalConfig.setSwagger2(false);
+        // XML ResultMap
+        globalConfig.setBaseResultMap(true);
+        // XML columList
+        globalConfig.setBaseColumnList(true);
+        globalConfig.setFileOverride(true);
+
+        return globalConfig;
+
     }
 
     /**
      * 自定义文件命名，注意 %s 会自动填充表实体属性！
      *
-     * @param gc
+     * @param globalConfig
      */
-    private static void getFileName(AutoGenerator mpg, GlobalConfig gc) {
-        gc.setControllerName("%sController");
-        gc.setServiceName("%sService");
-        gc.setServiceImplName("%sServiceImpl");
-        gc.setMapperName("%sMapper");
-        gc.setXmlName("%sMapper");
-        mpg.setGlobalConfig(gc);
+    private static void getFileName(AutoGenerator generator, GlobalConfig globalConfig) {
+        globalConfig.setControllerName("%sController");
+        globalConfig.setServiceName("%sService");
+        globalConfig.setServiceImplName("%sServiceImpl");
+        globalConfig.setMapperName("%sMapper");
+        globalConfig.setXmlName("%sMapper");
+        globalConfig.setEntityName("%s");
+        generator.setGlobalConfig(globalConfig);
     }
 
     /**
      * 数据源配置
      *
-     * @param mpg
+     * @param generator
      */
-    private static void getDataSource(AutoGenerator mpg) {
+    private static void getDataSource(AutoGenerator generator) {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername(FileUtils.readYml("datasource.username"));
         dsc.setPassword(FileUtils.readYml("datasource.password"));
         dsc.setUrl(FileUtils.readYml("datasource.url"));
-        mpg.setDataSource(dsc);
+        generator.setDataSource(dsc);
     }
 
     /**
      * 策略配置
      *
-     * @param mpg
+     * @param generator
      */
-    private static void getPolicConfig(AutoGenerator mpg) {
+    private static void getStrategyConfig(AutoGenerator generator) {
         StrategyConfig strategy = new StrategyConfig();
-        //     strategy.setTablePrefix(new String[] { "so_" });// 此处可以修改为您的表前缀
-        strategy.setNaming(NamingStrategy.underline_to_camel); // 表名生成策略
-        String talbe = FileUtils.readYml("gencode.inTables");
-        strategy.setInclude(talbe.split(",")); // 需要生成的表
-        // 自定义实体父类
+        // 是否大写命名
+        // strategy.isCapitalMode();
+        // 是否跳过视图
+        // strategy.isSkipView();
+        // 乐观锁字段
+        strategy.setVersionFieldName("version");
+        // 逻辑删除
+        //strategy.setLogicDeleteFieldName("del_Flag");
+        // 表名生成策略
+        strategy.setNaming(NamingStrategy.underline_to_camel);
+        // 表字段生成策略
+        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        // 表前缀
+        //strategy.setTablePrefix(new String[] { "so_" });
+        // 字段前缀
+        strategy.setFieldPrefix(new String[]{"so_"});
+        // 自定义继承的 Entity 类全称，带包名
         strategy.setSuperEntityClass(FileUtils.readYml("system.superEntityClass"));
-        String uperEntityColumns = FileUtils.readYml("system.uperEntityColumns");
-        // 自定义实体，公共字段
-        strategy.setSuperEntityColumns(uperEntityColumns.split(","));
-        // 自定义 mapper 父类
+        String superEntityColumns = FileUtils.readYml("system.uperEntityColumns");
+        // 自定义基础的 Entity 类，公共字段
+        strategy.setSuperEntityColumns(superEntityColumns.split(","));
+        // 自定义继承的 Mapper 类全称，带包名
         strategy.setSuperMapperClass("com.baomidou.mybatisplus.core.mapper.BaseMapper");
-
+        // 自定义继承的 Service 类全称，带包名
+        strategy.setSuperServiceClass("com.baomidou.mybatisplus.extension.service.IService");
+        // 自定义继承的 ServiceImpl 类全称，带包名
+        strategy.setSuperServiceImplClass("com.baomidou.mybatisplus.extension.service.impl.ServiceImpl");
+        // 自定义继承的 Controller 类全称，带包名
         strategy.setSuperControllerClass(null);
+        // 需要生成的表
+        String talbe = FileUtils.readYml("gencode.inTables");
+        strategy.setInclude(talbe.split(","));
 
-        mpg.setStrategy(strategy);
+        generator.setStrategy(strategy);
     }
 
     /**
@@ -119,7 +143,7 @@ public class CodeGeneration {
      *
      * @param mpg
      */
-    private static void getCustomConfig(AutoGenerator mpg) {
+    private static void getInjectionConfig(AutoGenerator mpg) {
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
@@ -153,25 +177,38 @@ public class CodeGeneration {
     }
 
     /**
-     * 指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
+     * 模板配置 不要带上.ftl/.vm
      *
-     * @param mpg
+     * @param generator
      */
-    private static void getPath(AutoGenerator mpg) {
+    private static void getTemplateConfig(AutoGenerator generator) {
         TemplateConfig templateConfig = new TemplateConfig();
+        templateConfig.setController("templates/controller.java");
         templateConfig.setService("templates/service.java");
         templateConfig.setServiceImpl("templates/serviceImpl.java");
-        // 包配置/**/mpg.setTemplate(templateConfig);
+        templateConfig.setMapper("templates/mapper.java");
+        templateConfig.setXml("templates/mapper.xml");
+        templateConfig.setEntity("templates/entity.java");
+        generator.setTemplate(templateConfig);
+    }
+
+
+    /**
+     * 包名配置
+     *
+     * @param generator
+     */
+    private static void getPackageConfig(AutoGenerator generator) {
         PackageConfig pc = new PackageConfig();
         pc.setParent(packageName);
-        pc.setEntity("entity");
         pc.setController("controller");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
         pc.setMapper("mapper");
         pc.setXml("xml");
+        pc.setEntity("entity");
 
-        mpg.setPackageInfo(pc);
+        generator.setPackageInfo(pc);
     }
 
 
