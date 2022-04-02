@@ -1,8 +1,10 @@
 # 数据源配置
 datasource:
-  url: jdbc:mysql://192.168.110.221:3306/aiya-busline?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&serverTimezone=America/New_York
+  # url: jdbc:mysql://192.168.110.221:3306/aiya-busline?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&serverTimezone=America/New_York
+  url: jdbc:mysql://18.222.222.223:3306/aiya-busline?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&serverTimezone=America/New_York
   username: root
-  password: AfmKlZHe11
+  # password: AfmKlZHe11
+  password: KPnCiPh-2700
 
 
 system:
@@ -20,4 +22,4 @@ gencode:
   # 包名
   packageName: us.aiya.busline
   # 表名
-  inTables: bus_operate_busline_schedule
+  inTables: bus_log_customer

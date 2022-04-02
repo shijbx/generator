@@ -51,7 +51,7 @@ public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, $
      LambdaQueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>().lambda();
      queryWrapper.orderByDesc(${entity}::getCreateTime);
      List<${entity}> list = baseMapper.selectList(queryWrapper);
-     return list.stream().map(p -> ObjectUtil.copy(p, ${entity}VO.class)).collect(Collectors.toList());
+     return ObjectUtil.copy(list, ${entity}VO.class);
    }
 
    @Override
