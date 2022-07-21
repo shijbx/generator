@@ -124,11 +124,11 @@ public class CodeGeneration {
         // 自定义基础的 Entity 类，公共字段
         strategy.setSuperEntityColumns(superEntityColumns.split(","));
         // 自定义继承的 Mapper 类全称，带包名
-        strategy.setSuperMapperClass("com.baomidou.mybatisplus.core.mapper.BaseMapper");
+        strategy.setSuperMapperClass("us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDMapper");
         // 自定义继承的 Service 类全称，带包名
-        strategy.setSuperServiceClass("com.baomidou.mybatisplus.extension.service.IService");
+        strategy.setSuperServiceClass("us.epayworld.common.baseconfig.mybatisplus.core.IBaseCURD");
         // 自定义继承的 ServiceImpl 类全称，带包名
-        strategy.setSuperServiceImplClass("com.baomidou.mybatisplus.extension.service.impl.ServiceImpl");
+        strategy.setSuperServiceImplClass("us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDImpl");
         // 自定义继承的 Controller 类全称，带包名
         strategy.setSuperControllerClass(null);
         // 需要生成的表

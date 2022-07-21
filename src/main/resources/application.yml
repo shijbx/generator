@@ -1,6 +1,6 @@
 # 数据源配置
 datasource:
-  url: jdbc:mysql://127.0.0.1:3306/aiya-busline?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&serverTimezone=America/New_York
+  url: jdbc:mysql://18.222.222.223:3306/aiya-reservation?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&serverTimezone=America/New_York
   username: root
   password: KPnCiPh-2700
 
@@ -16,8 +16,11 @@ gencode:
   # 作者
   author: sain
   # 项目本地路径
-  outputUrl: /Users/xbb/soft/aiya/aiya_busline_java
+  # outputUrl: /Users/xbb/soft/aiya/aiya-busline
+  outputUrl: /Users/xbb/soft/aiya/project/aiya-online/reservation
   # 包名
-  packageName: us.aiya.busline
+  # packageName: us.aiya.busline
+  packageName: us.aiya.reservation
   # 表名 多个用逗号分隔
-  inTables: bus_operate_busline_inventory
+  inTables: rsv_order
+

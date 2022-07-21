@@ -9,9 +9,9 @@
         <relativePath/>
     </parent>
     <groupId>cn.xiaobinbin</groupId>
-    <artifactId>generator</artifactId>
+    <artifactId>generator-plus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>generator</name>
+    <name>generator-plus</name>
 
     <properties>
         <java.version>1.8</java.version>

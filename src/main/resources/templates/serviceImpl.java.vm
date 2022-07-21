@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDImpl
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import ${package.Entity}.${entity};
@@ -13,9 +13,9 @@ import ${package.Entity}.bo.${entity}BO;
 import ${package.Entity}.vo.${entity}VO;
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
-import us.aiya.busline.utils.DefaultSearchCondition;
-import us.aiya.busline.utils.ObjectUtil;
-import us.aiya.busline.utils.SelectPageMent;
+import us.epayworld.common.query.DefaultSearchCondition;
+import us.epayworld.common.util.ObjectUtil;
+import us.epayworld.common.query.SelectPageMent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @since ${date}
  */
 @Service
-public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+public class ${table.serviceImplName} extends BaseCURDImpl<${table.mapperName}, ${entity}, ${entity}VO, ${entity}BO> implements ${table.serviceName} {
 
 
    @Override

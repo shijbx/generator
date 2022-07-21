@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ${package.Entity}.bo.${entity}BO;
 import ${package.Entity}.vo.${entity}VO;
 import ${package.Service}.${table.serviceName};
-import us.aiya.busline.utils.DelBatch;
-import us.aiya.busline.utils.Rv;
-import us.aiya.busline.utils.SelectPageMent;
+import us.epayworld.common.query.DelBatch;
+import us.epayworld.common.entity.Rv;
+import us.epayworld.common.query.SelectPageMent;
 
 import javax.annotation.Resource;
 import java.util.List;
