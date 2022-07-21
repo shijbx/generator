@@ -2,12 +2,10 @@ package ${package.ServiceImpl};
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDImpl
+import us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDImpl;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import ${package.Entity}.${entity};
 import ${package.Entity}.bo.${entity}BO;
 import ${package.Entity}.vo.${entity}VO;
@@ -18,7 +16,6 @@ import us.epayworld.common.util.ObjectUtil;
 import us.epayworld.common.query.SelectPageMent;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**
@@ -30,7 +27,7 @@ import java.util.stream.Collectors;
  * @since ${date}
  */
 @Service
-public class ${table.serviceImplName} extends BaseCURDImpl<${table.mapperName}, ${entity}, ${entity}VO, ${entity}BO> implements ${table.serviceName} {
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}, ${entity}VO, ${entity}BO> implements ${table.serviceName} {
 
 
    @Override
@@ -54,33 +51,6 @@ public class ${table.serviceImplName} extends BaseCURDImpl<${table.mapperName}, 
      return ObjectUtil.copy(list, ${entity}VO.class);
    }
 
-   @Override
-   public ${entity}VO getInfoById(Integer id) {
-   ${entity}VO vo = ObjectUtil.copy(baseMapper.selectById(id), ${entity}VO.class);
-     return vo;
-   }
-
-   @Override
-   public void save(${entity}BO bo){
-     baseMapper.insert(ObjectUtil.copy(bo, ${entity}.class));
-   }
-
-   @Override
-   public void update(${entity}BO bo){
-      baseMapper.updateById(ObjectUtil.copy(bo, ${entity}.class));
-   }
-
-   @Override
-   public void delete(Long id){
-      baseMapper.deleteById(id);
-   }
-
-   @Override
-   public void deleteByIds(List<Long> ids) {
-     if(!CollectionUtils.isEmpty(ids)){
-        this.removeByIds(ids);
-        }
-   }
 
 }
 

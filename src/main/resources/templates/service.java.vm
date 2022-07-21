@@ -6,6 +6,7 @@ import ${package.Entity}.${entity};
 import ${package.Entity}.bo.${entity}BO;
 import ${package.Entity}.vo.${entity}VO;
 import us.epayworld.common.query.SelectPageMent;
+import us.epayworld.common.baseconfig.mybatisplus.core.IBaseCURD;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * @since ${date}
  */
 
-public interface ${table.serviceName} extends IService<${entity}, ${entity}VO, ${entity}BO>{
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}, ${entity}VO, ${entity}BO>{
     /**
      * 分页查询
      *
@@ -34,45 +35,6 @@ public interface ${table.serviceName} extends IService<${entity}, ${entity}VO, $
      */
     List<${entity}VO> queryList(${entity}BO bo);
 
-    /**
-     * 查询详情
-     *
-     * @Param: id
-     * @return: ${entity}VO
-     */
-    ${entity}VO getInfoById(Integer id);
-
-    /**
-     * 新增
-     *
-     * @Param: bo
-     * @return: int
-     */
-    void save(${entity}BO bo);
-
-    /**
-     * 修改
-     *
-     * @Param: bo
-     * @return: int
-     */
-    void update(${entity}BO bo);
-
-    /**
-     * 删除
-     *
-     * @Param: id
-     * @return: int
-     */
-    void delete(Long id);
-
-    /**
-     * 批量删除
-     *
-     * @Param: ids
-     * @return: Boolean
-     */
-    void deleteByIds(List<Long> ids);
 
 }
 

@@ -47,7 +47,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "查询详情", notes = "查询详情")
     @GetMapping("/getInfo/{id}")
     public Rv<${entity}VO> getInfo(@PathVariable Integer id) {
-        return new Rv(service.getInfoById(id));
+        return new Rv(service.getById(id));
     }
 
     @ApiOperation(value = "新增", notes = "新增")
@@ -60,14 +60,14 @@ public class ${table.controllerName} {
     @ApiOperation(value = "修改", notes = "修改")
     @PostMapping("/update")
     public Rv update(@RequestBody ${entity}BO bo) {
-        service.update(bo);
+        service.updateById(bo);
         return Rv.OK();
     }
 
     @ApiOperation(value = "删除", notes = "删除")
     @PostMapping("/delete")
     public Rv delete(@RequestBody DelBatch delBatch) {
-        service.delete(delBatch.getId());
+        service.removeById(delBatch.getId());
         return Rv.OK();
     }
 
@@ -75,7 +75,7 @@ public class ${table.controllerName} {
     @PostMapping("/deleteByIds")
     public Rv deleteByIds(@RequestBody DelBatch delBatch) {
         List<Long> ids = delBatch.getSelectedRowKeys().stream().map(id->(long)id).collect(Collectors.toList());
-        service.deleteByIds(ids);
+        service.deleteByBatchIds(ids);
         return Rv.OK();
     }
 }
