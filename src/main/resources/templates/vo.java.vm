@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import us.epayworld.common.baseconfig.mybatisplus.base.BaseVO;
+import us.aiya.crm.common.domain.BaseEntity;
 
 
 /**
@@ -18,7 +18,7 @@ import us.epayworld.common.baseconfig.mybatisplus.base.BaseVO;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value = "${entity}VO", description = "$!{table.comment}")
 #if(${superEntityClass})
-public class ${entity}VO extends BaseVO {
+public class ${entity}VO extends BaseEntity {
 #else
 public class ${entity}VO implements Serializable {
 

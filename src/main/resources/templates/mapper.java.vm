@@ -2,7 +2,7 @@ package ${package.Mapper};
 
 import org.apache.ibatis.annotations.Mapper;
 import ${package.Entity}.${entity};
-import us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * $!{table.comment} Mapper 接口
@@ -14,7 +14,7 @@ import us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDMapper;
 interface ${table.mapperName} : ${superMapperClass}<${entity}>
 #else
 @Mapper
-public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+public interface ${table.mapperName} extends BaseMapper<${entity}> {
 
 }
 #end

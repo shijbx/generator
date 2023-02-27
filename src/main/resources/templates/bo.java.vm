@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.Data;
 import java.util.Date;
-import us.epayworld.common.baseconfig.mybatisplus.base.BaseBO;
+import us.aiya.crm.entity.dto.PageDTO;
 
 
 /**
@@ -16,7 +16,7 @@ import us.epayworld.common.baseconfig.mybatisplus.base.BaseBO;
  */
 @Data
 @ApiModel(value = "${entity}BO", description = "$!{table.comment}")
-public class ${entity}BO extends BaseBO {
+public class ${entity}BO extends PageDTO {
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})

@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import ${package.Entity}.${entity};
 import ${package.Entity}.bo.${entity}BO;
 import ${package.Entity}.vo.${entity}VO;
-import us.epayworld.common.query.SelectPageMent;
-import us.epayworld.common.baseconfig.mybatisplus.core.IBaseCURD;
+import us.aiya.crm.utils.SelectPageMent;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
  * @since ${date}
  */
 
-public interface ${table.serviceName} extends ${superServiceClass}<${entity}, ${entity}VO, ${entity}BO>{
+public interface ${table.serviceName} extends IService<${entity}>{
     /**
      * 分页查询
      *
