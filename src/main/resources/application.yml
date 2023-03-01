@@ -22,5 +22,5 @@ gencode:
   # packageName: us.aiya.busline
   packageName: us.aiya.crm
   # 表名 多个用逗号分隔
-  inTables: sys_merchant_button_record
+  inTables: sys_case_assigned_record
 
