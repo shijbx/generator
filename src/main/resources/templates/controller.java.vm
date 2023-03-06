@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ${package.Entity}.bo.${entity}BO;
 import ${package.Entity}.vo.${entity}VO;
 import ${package.Service}.${table.serviceName};
-import us.epayworld.common.query.DelBatch;
-import us.epayworld.common.entity.Rv;
-import us.epayworld.common.query.SelectPageMent;
+import us.aiya.reservation.common.domain.DelBO;
+import us.aiya.reservation.utils.R;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,49 +32,48 @@ public class ${table.controllerName} {
 
     @ApiOperation(value = "分页查询", notes = "分页查询")
     @PostMapping("/queryPageByList")
-    public Rv<IPage<${entity}VO>> queryPageByList(@RequestBody SelectPageMent spm) {
-        return new Rv(service.queryPageByList(spm));
+    public R<IPage<${entity}VO>> queryPageByList(@RequestBody ${entity}BO bo) {
+        return R.ok(service.queryPageByList(bo));
     }
 
     @ApiOperation(value = "查询列表", notes = "查询列表")
     @GetMapping("/queryList")
-    public Rv<List<${entity}VO>> queryList(${entity}BO bo) {
-        return new Rv(service.queryList(bo));
+    public R<List<${entity}VO>> queryList(${entity}BO bo) {
+        return R.ok(service.queryList(bo));
     }
 
 
     @ApiOperation(value = "查询详情", notes = "查询详情")
     @GetMapping("/getInfo/{id}")
-    public Rv<${entity}VO> getInfo(@PathVariable Integer id) {
-        return new Rv(service.getById(id));
+    public R<${entity}VO> getInfo(@PathVariable Integer id) {
+        return R.ok(service.getById(id));
     }
 
     @ApiOperation(value = "新增", notes = "新增")
     @PostMapping("/save")
-    public Rv save(@RequestBody ${entity}BO bo) {
+    public R save(@RequestBody ${entity}BO bo) {
         service.save(bo);
-        return Rv.OK();
+        return R.ok();
     }
 
     @ApiOperation(value = "修改", notes = "修改")
     @PostMapping("/update")
-    public Rv update(@RequestBody ${entity}BO bo) {
+    public R update(@RequestBody ${entity}BO bo) {
         service.updateById(bo);
-        return Rv.OK();
+        return R.ok();
     }
 
     @ApiOperation(value = "删除", notes = "删除")
     @PostMapping("/delete")
-    public Rv delete(@RequestBody DelBatch delBatch) {
-        service.removeById(delBatch.getId());
-        return Rv.OK();
+    public R delete(@RequestBody DelBO bo) {
+        service.removeById(bo.getId());
+        return R.ok();
     }
 
     @ApiOperation(value = "批量删除", notes = "批量删除")
     @PostMapping("/deleteByIds")
-    public Rv deleteByIds(@RequestBody DelBatch delBatch) {
-        List<Long> ids = delBatch.getSelectedRowKeys().stream().map(id->(long)id).collect(Collectors.toList());
-        service.deleteByBatchIds(ids);
-        return Rv.OK();
+    public R deleteByIds(@RequestBody DelBO bo) {
+        service.deleteByBatchIds(bo.getIds());
+        return R.ok();
     }
 }

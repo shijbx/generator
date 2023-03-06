@@ -2,7 +2,7 @@ package ${package.Mapper};
 
 import org.apache.ibatis.annotations.Mapper;
 import ${package.Entity}.${entity};
-import us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDMapper;
+import us.aiya.reservation.common.config.mybatisplus.BaseCURDMapper;
 
 /**
  * $!{table.comment} Mapper 接口

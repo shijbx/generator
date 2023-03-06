@@ -17,10 +17,10 @@ gencode:
   author: sain
   # 项目本地路径
   # outputUrl: /Users/xbb/soft/aiya/aiya-busline
-  outputUrl: /Users/xbb/soft/aiya/project/aiya-online/reservation
+  outputUrl: /Users/xbb/soft/aiya/project/aiya-reservation/reservation-web
   # 包名
   # packageName: us.aiya.busline
   packageName: us.aiya.reservation
   # 表名 多个用逗号分隔
-  inTables: rsv_order
+  inTables: rsv_merchant_visit
 

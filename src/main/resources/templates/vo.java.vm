@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import us.epayworld.common.baseconfig.mybatisplus.base.BaseVO;
+import us.aiya.reservation.common.domain.BaseVO;
 
 
 /**

@@ -4,16 +4,14 @@ package ${package.ServiceImpl};
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import us.epayworld.common.baseconfig.mybatisplus.core.BaseCURDImpl;
+import us.aiya.reservation.common.config.mybatisplus.BaseCURDImpl;
 import org.springframework.stereotype.Service;
 import ${package.Entity}.${entity};
 import ${package.Entity}.bo.${entity}BO;
 import ${package.Entity}.vo.${entity}VO;
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
-import us.epayworld.common.query.DefaultSearchCondition;
-import us.epayworld.common.util.ObjectUtil;
-import us.epayworld.common.query.SelectPageMent;
+import us.aiya.reservation.common.util.ObjectUtil;
 
 import java.util.List;
 
@@ -31,13 +29,13 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
 
    @Override
-   public IPage<${entity}VO> queryPageByList(SelectPageMent spm){
+   public IPage<${entity}VO> queryPageByList(${entity}BO bo){
 
-     Page<${entity}> page = new Page<>(spm.getStartPage(), spm.getPageSize());
+     Page<${entity}> page = new Page<>(bo.getPageNum(), bo.getPageSize());
 
-     DefaultSearchCondition<${entity}> scw = new DefaultSearchCondition<>();
-
-     baseMapper.selectPage(page,scw.computeSearchCondition("create_time", spm));
+     LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.lambdaQuery(${entity}.class);
+     queryWrapper.orderByDesc(${entity}::getCreateTime);
+     baseMapper.selectPage(page, queryWrapper);
 
      return ObjectUtil.copyPage(page, ${entity}VO.class);
 
@@ -45,7 +43,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
    @Override
    public List<${entity}VO> queryList(${entity}BO bo) {
-     LambdaQueryWrapper<${entity}> queryWrapper = new LambdaQueryWrapper<>();
+     LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.lambdaQuery(${entity}.class);
      queryWrapper.orderByDesc(${entity}::getCreateTime);
      List<${entity}> list = baseMapper.selectList(queryWrapper);
      return ObjectUtil.copy(list, ${entity}VO.class);

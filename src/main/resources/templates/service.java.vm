@@ -6,7 +6,7 @@ import ${package.Entity}.${entity};
 import ${package.Entity}.bo.${entity}BO;
 import ${package.Entity}.vo.${entity}VO;
 import us.epayworld.common.query.SelectPageMent;
-import us.epayworld.common.baseconfig.mybatisplus.core.IBaseCURD;
+import us.aiya.reservation.common.config.mybatisplus.IBaseCURD;
 
 import java.util.List;
 
@@ -22,10 +22,10 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}, ${
     /**
      * 分页查询
      *
-     * @Param: spm
+     * @Param: bo
      * @return: IPage<${entity}VO>
      */
-    IPage<${entity}VO> queryPageByList(SelectPageMent spm);
+    IPage<${entity}VO> queryPageByList(${entity}BO bo);
 
     /**
      * 查询列表

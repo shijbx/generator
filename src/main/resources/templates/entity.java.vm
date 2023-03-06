@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import us.epayworld.common.BaseEntity;
+import us.aiya.reservation.common.domain.BaseEntity;
 
 
 /**
