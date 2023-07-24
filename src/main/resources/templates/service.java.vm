@@ -1,11 +1,12 @@
 package ${package.Service};
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
-import ${package.Entity}.${entity};
-import ${package.Entity}.bo.${entity}BO;
-import ${package.Entity}.vo.${entity}VO;
-import us.aiya.crm.utils.SelectPageMent;
+import com.bbbus.common.mybatis.core.IBaseCURD;
+import com.bbbus.common.mybatis.core.page.PageQuery;
+import com.bbbus.dao.operator.domain.${entity};
+import com.bbbus.dao.operator.domain.bo.${entity}BO;
+import com.bbbus.dao.car.domain.vo.${entity}ListVO;
+import com.bbbus.dao.operator.domain.vo.${entity}VO;
 
 import java.util.List;
 
@@ -16,23 +17,24 @@ import java.util.List;
  * @author ${author}
  * @since ${date}
  */
+public interface ${table.serviceName} extends IBaseCURD<${entity}, ${entity}VO, ${entity}BO>{
 
-public interface ${table.serviceName} extends IService<${entity}>{
-    /**
-     * 分页查询
-     *
-     * @Param: spm
-     * @return: IPage<${entity}VO>
-     */
-    IPage<${entity}VO> queryPageByList(SelectPageMent spm);
+        /**
+         * 查询分页
+         *
+         * @param operatorId
+         * @param pageQuery
+         * @return
+         */
+        IPage<${entity}ListVO> queryPageByList(Long operatorId,PageQuery pageQuery);
 
-    /**
-     * 查询列表
-     *
-     * @Param: bo
-     * @return: List<${entity}VO>
-     */
-    List<${entity}VO> queryList(${entity}BO bo);
+        /**
+         * 查询列表
+         *
+         * @param bo
+         * @return
+         */
+        List<${entity}VO> queryList(${entity}BO bo);
 
 
 }

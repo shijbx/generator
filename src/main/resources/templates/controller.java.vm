@@ -1,74 +1,88 @@
 package ${package.Controller};
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.bbbus.auth.annotation.Log;
+import com.bbbus.auth.enums.BusinessType;
+import com.bbbus.common.core.domain.DelBO;
+import com.bbbus.common.core.domain.R;
+import com.bbbus.common.core.utils.ObjectUtil;
 import org.springframework.web.bind.annotation.*;
-import ${package.Entity}.bo.${entity}BO;
-import ${package.Entity}.vo.${entity}VO;
-import ${package.Service}.${table.serviceName};
-import us.aiya.crm.utils.DelBatch;
-import us.aiya.crm.common.domain.Rv;
-import us.aiya.crm.utils.SelectPageMent;
+import com.bbbus.common.mybatis.core.page.PageQuery;
+import com.bbbus.common.satoken.utils.TokenUtils;
+import com.bbbus.dao.order.domain.bo.${entity}BO;
+import com.bbbus.dao.order.domain.bo.${entity}AddBO;
+import com.bbbus.dao.order.domain.bo.${entity}UpdateBO;
+import com.bbbus.dao.order.domain.vo.${entity}VO;
+import com.bbbus.dao.order.domain.vo.${entity}ListVO;
+import com.bbbus.services.order.service.${table.serviceName};
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
- * <p>
  * $!{table.comment} 前端控制器
- * </p>
  *
  * @author ${author}
  * @since ${date}
  */
-@Api(tags = "$!{table.comment}相关接口")
+@Tag(name = "$!{table.comment}相关接口")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("${entity}")
 public class ${table.controllerName} {
 
-    @Resource
-    private ${table.serviceName} service;
+    private final ${table.serviceName} service;
 
-    @ApiOperation(value = "分页查询", notes = "分页查询")
     @PostMapping("/queryPageByList")
-    public Rv<IPage<${entity}VO>> queryPageByList(@RequestBody SelectPageMent spm) {
-        return new Rv(service.queryPageByList(spm));
+    @Log(title = "查询列表-分页", businessType = BusinessType.QUERY)
+    @Operation(summary = "查询列表-分页", description = "查询列表-分页")
+    public R<IPage<${entity}ListVO>> queryPageByList(@RequestBody PageQuery pageQuery) {
+        return R.ok(service.queryPageByList(TokenUtils.getOperatorId(), pageQuery));
     }
 
-    @ApiOperation(value = "查询列表", notes = "查询列表")
     @GetMapping("/queryList")
-    public Rv<List<${entity}VO>> queryList(${entity}BO bo) {
-        return new Rv(service.queryList(bo));
+    @Log(title = "查询列表",businessType = BusinessType.QUERY)
+    @Operation(summary = "查询列表", description = "查询列表")
+    public R<List<${entity}VO>> queryList(${entity}BO bo) {
+        return R.ok(service.queryList(bo));
     }
 
 
-    @ApiOperation(value = "查询详情", notes = "查询详情")
     @GetMapping("/getInfo/{id}")
-    public Rv<${entity}VO> getInfo(@PathVariable Integer id) {
-        return new Rv(service.getById(id));
+    @Log(title = "查询详情",businessType = BusinessType.QUERY)
+    @Operation(summary = "查询详情", description = "查询详情")
+    public R<${entity}VO> getInfo(@PathVariable Long id) {
+        return R.ok(service.selectById(id));
     }
 
-    @ApiOperation(value = "新增", notes = "新增")
     @PostMapping("/save")
-    public Rv save(@RequestBody ${entity}BO bo) {
-        service.save(bo);
-        return Rv.OK();
+    @Log(title = "新增",businessType = BusinessType.INSERT)
+    @Operation(summary = "新增", description = "新增")
+    public R<Boolean> save(@RequestBody ${entity}AddBO bo) {
+        ${entity}BO entity = ObjectUtil.copy(bo, ${entity}BO.class);
+        entity.setOperatorId(TokenUtils.getOperatorId());
+        return R.ok(service.save(entity));
     }
 
-    @ApiOperation(value = "修改", notes = "修改")
     @PostMapping("/update")
-    public Rv update(@RequestBody ${entity}BO bo) {
-        service.updateById(bo);
-        return Rv.OK();
+    @Log(title = "修改",businessType = BusinessType.UPDATE)
+    @Operation(summary = "修改", description = "修改")
+    public R<Boolean> update(@RequestBody ${entity}UpdateBO bo) {
+        ${entity}BO entity = ObjectUtil.copy(bo, ${entity}BO.class);
+        return R.ok(service.updateById(entity));
     }
 
-    @ApiOperation(value = "删除", notes = "删除")
     @PostMapping("/delete")
-    public Rv delete(@RequestBody DelBatch delBatch) {
-        service.removeById(delBatch.getId());
-        return Rv.OK();
+    @Log(title = "删除",businessType = BusinessType.DELETE)
+    @Operation(summary = "删除", description = "删除")
+    public R<Boolean> delete(@RequestBody DelBO bo) {
+        return R.ok(service.removeById(bo.getId()));
     }
 
 }

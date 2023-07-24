@@ -1,12 +1,10 @@
 package ${package.Entity}.bo;
 
-import com.bbbus.common.core.domain.BaseBO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import lombok.Data;
 import java.util.Date;
 
-import lombok.EqualsAndHashCode;
 
 
 /**
@@ -16,9 +14,8 @@ import lombok.EqualsAndHashCode;
  * @since ${date}
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
 @Schema(description = "${entity}BO")
-public class ${entity}BO extends BaseBO {
+public class ${entity}UpdateBO {
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})

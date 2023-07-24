@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import us.aiya.crm.common.domain.BaseEntity;
+import com.bbbus.common.core.domain.BaseEntity;
 
 
 /**
@@ -20,15 +20,7 @@ import us.aiya.crm.common.domain.BaseEntity;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("${table.name}")
-#if(${superEntityClass})
-public class ${entity} extends ${superEntityClass} {
-#else
-public class ${entity} implements Serializable {
-
-private static final long serialVersionUID = -1L;
-
-#end
-
+public class ${entity} extends BaseEntity {
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})

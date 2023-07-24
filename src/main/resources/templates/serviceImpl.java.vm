@@ -1,56 +1,48 @@
 package ${package.ServiceImpl};
 
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bbbus.common.core.utils.ObjectUtil;
+import com.bbbus.common.mybatis.core.BaseCURDImpl;
+import com.bbbus.common.mybatis.core.page.PageQuery;
+import com.bbbus.dao.operator.domain.${entity};
+import com.bbbus.dao.operator.domain.bo.${entity}BO;
+import com.bbbus.dao.operator.domain.vo.${entity}ListVO;
+import com.bbbus.dao.operator.domain.vo.${entity}VO;
+import com.bbbus.dao.operator.mapper.${table.mapperName};
+import com.bbbus.services.operator.service.${table.serviceName};
 import org.springframework.stereotype.Service;
-import ${package.Entity}.${entity};
-import ${package.Entity}.bo.${entity}BO;
-import ${package.Entity}.vo.${entity}VO;
-import ${package.Mapper}.${table.mapperName};
-import ${package.Service}.${table.serviceName};
-import us.aiya.crm.utils.DefaultSearchCondition;
-import us.aiya.crm.utils.ObjectUtil;
-import us.aiya.crm.utils.SelectPageMent;
 
 import java.util.List;
 
-
 /**
- * <p>
  * $!{table.comment} 服务实现类
- * </p>
  *
  * @author ${author}
  * @since ${date}
  */
 @Service
-public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+public class ${table.serviceImplName} extends BaseCURDImpl<${table.mapperName}, ${entity}, ${entity}VO, ${entity}BO> implements ${table.serviceName} {
 
+    @Override
+    public IPage<${entity}ListVO> queryPageByList(Long operatorId, PageQuery pageQuery) {
+        LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.lambdaQuery(${entity}.class);
+        queryWrapper.eq(${entity}::getOperatorId, operatorId);
+        queryWrapper.orderByDesc(${entity}::getCreateTime;
+        Page<${entity}ListVO> voPage = ObjectUtil.copyPage(this.page(pageQuery.build(), queryWrapper), ${entity}ListVO.class);
 
-   @Override
-   public IPage<${entity}VO> queryPageByList(SelectPageMent spm){
+        return voPage;
+    }
 
-     Page<${entity}> page = new Page<>(spm.getStartPage(), spm.getPageSize());
+    @Override
+    public List<${entity}VO> queryList(${entity}BO bo) {
+        LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.lambdaQuery(${entity}.class);
+        queryWrapper.eq(${entity}::getOperatorId, operatorId);
+        queryWrapper.orderByDesc(${entity}::getCreateTime());
 
-     DefaultSearchCondition<${entity}> scw = new DefaultSearchCondition<>();
-
-     baseMapper.selectPage(page,scw.computeSearchCondition("create_time", spm));
-
-     return ObjectUtil.copyPage(page, ${entity}VO.class);
-
-   }
-
-   @Override
-   public List<${entity}VO> queryList(${entity}BO bo) {
-     LambdaQueryWrapper<${entity}> queryWrapper = new LambdaQueryWrapper<>();
-     queryWrapper.orderByDesc(${entity}::getCreateTime);
-     List<${entity}> list = baseMapper.selectList(queryWrapper);
-     return ObjectUtil.copy(list, ${entity}VO.class);
-   }
-
-
+        return this.selectList(queryWrapper);
+    }
 }
 

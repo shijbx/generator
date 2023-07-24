@@ -1,11 +1,10 @@
 package ${package.Entity}.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.bbbus.common.core.domain.BaseVO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import us.aiya.crm.common.domain.BaseEntity;
 
 
 /**
@@ -16,27 +15,16 @@ import us.aiya.crm.common.domain.BaseEntity;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value = "${entity}VO", description = "$!{table.comment}")
-#if(${superEntityClass})
-public class ${entity}VO extends BaseEntity {
-#else
-public class ${entity}VO implements Serializable {
-
-    private static final long serialVersionUID = -1L;
-
-#end
+@Schema(description = "${entity}VO")
+public class ${entity}VO extends BaseVO {
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})
 #set($keyPropertyName=${field.propertyName})
 #end
-#if("$!field.comment" != "")
-    /**
-     * ${field.comment}
-     */
-#end
-    @ApiModelProperty(value = "${field.comment}")
+
+    @Schema(description = "${field.comment}")
     #if("$!field.propertyName" != "")
     private ${field.propertyType} ${field.propertyName};
     #end

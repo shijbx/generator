@@ -1,24 +1,22 @@
-package ${package.Entity}.bo;
+package ${package.Entity}.vo;
 
-import com.bbbus.common.core.domain.BaseBO;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import lombok.Data;
-import java.util.Date;
-
 import lombok.EqualsAndHashCode;
 
 
 /**
- * $!{table.comment}BO
+ * $!{table.comment}VO
  *
  * @author ${author}
  * @since ${date}
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
-@Schema(description = "${entity}BO")
-public class ${entity}BO extends BaseBO {
+@Schema(description = "${entity}VO")
+public class ${entity}ListVO {
+
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})
@@ -26,7 +24,9 @@ public class ${entity}BO extends BaseBO {
 #end
 
     @Schema(description = "${field.comment}")
+    #if("$!field.propertyName" != "")
     private ${field.propertyType} ${field.propertyName};
+    #end
 #end
 
 

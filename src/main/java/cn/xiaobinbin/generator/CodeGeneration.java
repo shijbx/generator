@@ -109,15 +109,15 @@ public class CodeGeneration {
         // 乐观锁字段
         strategy.setVersionFieldName("version");
         // 逻辑删除
-        //strategy.setLogicDeleteFieldName("del_Flag");
+        strategy.setLogicDeleteFieldName("del_flag");
         // 表名生成策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
         // 表字段生成策略
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         // 表前缀
-        //strategy.setTablePrefix(new String[] { "so_" });
+        strategy.setTablePrefix(new String[] { "bbbus_" });
         // 字段前缀
-        strategy.setFieldPrefix(new String[]{"so_"});
+        //strategy.setFieldPrefix(new String[]{"bbbus_"});
         // 自定义继承的 Entity 类全称，带包名
         strategy.setSuperEntityClass(FileUtils.readYml("system.superEntityClass"));
         String superEntityColumns = FileUtils.readYml("system.uperEntityColumns");
@@ -152,7 +152,10 @@ public class CodeGeneration {
 
         // 自定义entityBo的代码模板
         String boTemplatePath = "/templates/bo.java.vm";
+        String addBoTemplatePath = "/templates/addbo.java.vm";
+        String updateBoTemplatePath = "/templates/updatebo.java.vm";
         String voTemplatePath = "/templates/vo.java.vm";
+        String listVoTemplatePath = "/templates/listvo.java.vm";
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
         //自定义配置会被优先输出
@@ -164,10 +167,31 @@ public class CodeGeneration {
                     }
                 });
         focList.add(
+                new FileOutConfig(addBoTemplatePath) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return path + "/" + packageName.replace(".", "/") + "/entity/bo/" + tableInfo.getEntityName() + "AddBO.java";
+                    }
+                });
+        focList.add(
+                new FileOutConfig(updateBoTemplatePath) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return path + "/" + packageName.replace(".", "/") + "/entity/bo/" + tableInfo.getEntityName() + "UpdateBO.java";
+                    }
+                });
+        focList.add(
                 new FileOutConfig(voTemplatePath) {
                     @Override
                     public String outputFile(TableInfo tableInfo) {
                         return path + "/" + packageName.replace(".", "/") + "/entity/vo/" + tableInfo.getEntityName() + "VO.java";
+                    }
+                });
+        focList.add(
+                new FileOutConfig(listVoTemplatePath) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return path + "/" + packageName.replace(".", "/") + "/entity/vo/" + tableInfo.getEntityName() + "ListVO.java";
                     }
                 });
         cfg.setFileOutConfigList(focList);

@@ -1,8 +1,8 @@
 package ${package.Mapper};
 
+import com.bbbus.common.mybatis.core.BaseCURDMapper;
+import com.bbbus.dao.operator.domain.${entity};
 import org.apache.ibatis.annotations.Mapper;
-import ${package.Entity}.${entity};
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * $!{table.comment} Mapper 接口
@@ -10,11 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author ${author}
  * @since ${date}
  */
-#if(${kotlin})
-interface ${table.mapperName} : ${superMapperClass}<${entity}>
-#else
 @Mapper
-public interface ${table.mapperName} extends BaseMapper<${entity}> {
+public interface ${table.mapperName} extends BaseCURDMapper<${entity}> {
 
 }
-#end
